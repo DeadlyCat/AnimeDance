@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Arrow : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Arrow : MonoBehaviour
 
     public Collider2D Collider { private set; get; }
     public float timeStart;
-
+    private Action complete;
     private void Awake()
     {
         tag = "Arrow";
@@ -20,9 +21,13 @@ public class Arrow : MonoBehaviour
     public void SetFinalPoint(Vector3 point)
     {
         final = point;
-        transform.DOMove(point, 1.7f).SetUpdate(UpdateType.Fixed).SetEase(Ease.Linear);
+        transform.DOMove(point, 0.567f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            complete?.Invoke();
+        });
     }
 
+    
     private void Start()
     {
         timeStart = Time.time;

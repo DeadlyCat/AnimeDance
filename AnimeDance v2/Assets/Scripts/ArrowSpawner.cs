@@ -14,14 +14,15 @@ public class ArrowSpawner : MonoBehaviour
     float timer = 0;
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+       print(startPoint.position.y - endPoint.position.y);
+        
     }
     private void Start()
     {
         float distance = Vector3.Distance(endPoint.position, startPoint.position);
        
     }
-    private void Update()
+    private void FixedUpdate()
     {
       
         if (timer >= repeatRate)
@@ -29,16 +30,15 @@ public class ArrowSpawner : MonoBehaviour
             SpawnArrow();
             timer = 0;
         }
-        timer += Time.deltaTime;
+        timer += Time.fixedDeltaTime;
 
     }
     private void SpawnArrow()
     {
-        
         Arrow arrow = Instantiate(prefabArrow,transform);
         arrow.transform.position = startPoint.position;
         arrow.SetFinalPoint(endPoint.position);
-        lastSpawnTime = Time.deltaTime;
+        lastSpawnTime = Time.fixedDeltaTime;
     }
 
     
